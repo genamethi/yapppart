@@ -1,0 +1,79 @@
+[build-system]
+requires = [
+    "setuptools>=64", 
+    #"wheel", 
+    #"Cython>=0.29; python_implementation != 'PyPy'",
+    "numpy>=1.26",
+    #"cmake"
+]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "pppart"
+version = "0.6.0"
+description = "A project for prime partition generation using SageMath."
+license = "MIT"
+authors = [{ name = "erpage", email = "genamthi@gmail.com" }]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=1.26,<2",
+    "psutil>=7.0.0,<8", 
+    "tqdm>=4.67.1,<5",
+]
+
+# --- Pixi Workspace and Environment Configuration ---
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.dependencies]
+python = ">=3.12"
+sagelib = ">=10.6,<11"
+
+numpy = ">=1.26,<2"
+psutil = ">=7.0.0,<8"
+tqdm = ">=4.67.1,<5"
+
+setuptools = ">=80.9.0,<81"
+
+pytest = ">=8.4.1,<9"
+
+altair = ">=5.5.0,<6"
+pytest-mock = ">=3.14.1,<4"
+scipy = ">=1.16.0,<2"
+scikit-learn = ">=1.7.0,<2"
+
+[tool.pixi.pypi-dependencies]
+pppart = { path = ".", editable = true }
+#giotto-ph = { path = "./giotto-ph", editable = true }
+
+[tool.pixi.activation.env]
+PPPART_USE_CYTHON = "0"
+
+[tool.pppart.directories]
+data_dir = "src/pppart/data"
+output_dir = "src/pppart/data/tmp"
+backup_dir = "src/pppart/data/backups"
+temp_dir = "src/pppart/data/tmp"
+
+[tool.pixi.tasks]
+test = "pytest"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+pppart = ["data/*.csv"]
+
+[project.scripts]
+pppart = "pppart.__main__:main"
+
+[tool.pixi.feature.dev.dependencies]
+sage = ">=10.6"
+
+[tool.pixi.environments]
+dev = ["dev"]
+
