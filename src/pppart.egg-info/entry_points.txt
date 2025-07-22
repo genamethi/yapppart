@@ -1,2 +1,0 @@
-[console_scripts]
-pppart = pppart.__main__:main
